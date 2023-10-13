@@ -1,29 +1,29 @@
 rm(list=ls())
 
 #: Define the setting:
-n = 1200
+n = 1000
 nseg = 4
 
 omega = list()
 omega[[1]] = c(1/25, 1/10)
-omega[[2]] = c(1/20)
-omega[[3]] = c(1/30, 1/15)
+omega[[2]] = c(1/15)
+omega[[3]] = c(1/30, 1/10)
 omega[[4]] = c(1/20)
 
 beta = list()
-beta[[1]] = matrix(c(0.5, 1.5, 
+beta[[1]] = matrix(c(1.5, 1.5, 
                      2.0, 1.0),2,2)
 beta[[2]] = matrix(c(2.0,
                      1.0),1,2)
-beta[[3]] = matrix(c(1.5, 2.0, 
-                     0.5, 1.0),2,2)
-beta[[4]] = matrix(c(0.5, 
+beta[[3]] = matrix(c(1.0, 2.0, 
+                     2.0, 1.0),2,2)
+beta[[4]] = matrix(c(1.5, 
                      2.0),1,2)
 
 #: Create data
 Nsim = 20
 ncp = nseg - 1
-minLen = 100
+minLen = 200
 seeds = sample(1:1e4,Nsim)
 cp = matrix(NA,Nsim,ncp)
 
@@ -52,6 +52,7 @@ for (it in 1:Nsim) {
 }
 
 plot(y)
+plot(y,type='l')
 
 save(list=c("n","nseg","omega","beta","cp",
             "Nsim","ncp","minLen","seeds"),file="data_sim/setting_1.RData")

@@ -21,7 +21,7 @@ path_non_stationary_fun = pwd()*"/functions_non_stationary_model.jl"
 include(path_stationary_fun)
 include(path_non_stationary_fun)
 
-global n_obs = 900
+global n_obs = 1200
 
 # ------------ Parameters MCMC for AutoNOM ----------
 
@@ -55,8 +55,9 @@ c_NS = 0.4 # constant for birth/death prbability, c ∈ (0, 0.5) -- Equation (6)
 # ----------------- Simulation Study  ------------------ #
 # ------------------------------------------------------ #
 Nsim = 20
-collect_cp = Array{Float64}(undef, Nsim, 2)
+collect_cp = Array{Float64}(undef, Nsim, 3)
 collect_s = Array{Float64}(undef, n_obs, Nsim)
+collect_time = Array{Float64}(undef, Nsim, 1)
 
 for sim_index in 1:Nsim
   fname = join(["data_sim/setting_1/data",sim_index,".txt"])
@@ -87,7 +88,7 @@ for sim_index in 1:Nsim
   n_CP_sample = MCMC_objects["n_CP"]
 
   # ------------- AutoNOM - Automatic Nonstationary Oscillatory Modelling  --------
-
+  tstart = time()
   @showprogress for t in 2:(n_iter_MCMC + 1)
 
   global y = copy(data)
@@ -218,7 +219,7 @@ for sim_index in 1:Nsim
   end
   end
 
-
+  tend = time()
 
 
   # ----------------------- Diagnostic Convergence  ----------------------
@@ -257,7 +258,7 @@ for sim_index in 1:Nsim
     s_est[j] = mean(s_final[j, index_CP_est])
   end
 
-  if length(s_est) == 2
+  if length(s_est) == 3
     collect_cp[sim_index,:] = s_est
   end
 
@@ -277,7 +278,11 @@ for sim_index in 1:Nsim
   end
   collect_s[:,sim_index] = sig_MCMC
 
+  collect_time[sim_index] = tend - tstart
+
 end
+
+collect_time
 
 collect_cp[1,:]
 plot(data)

@@ -11,25 +11,9 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// SER
-Rcpp::List SER(arma::vec y, arma::cube X, arma::cube XX, double sigma2, double sigma2_0, arma::vec pi_0);
-RcppExport SEXP _CPSuSiE_SER(SEXP ySEXP, SEXP XSEXP, SEXP XXSEXP, SEXP sigma2SEXP, SEXP sigma2_0SEXP, SEXP pi_0SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type y(ySEXP);
-    Rcpp::traits::input_parameter< arma::cube >::type X(XSEXP);
-    Rcpp::traits::input_parameter< arma::cube >::type XX(XXSEXP);
-    Rcpp::traits::input_parameter< double >::type sigma2(sigma2SEXP);
-    Rcpp::traits::input_parameter< double >::type sigma2_0(sigma2_0SEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type pi_0(pi_0SEXP);
-    rcpp_result_gen = Rcpp::wrap(SER(y, X, XX, sigma2, sigma2_0, pi_0));
-    return rcpp_result_gen;
-END_RCPP
-}
 // SuSiE_group
-Rcpp::List SuSiE_group(arma::vec y, arma::mat X1, arma::mat X2, double L, double delta, int maxIt);
-RcppExport SEXP _CPSuSiE_SuSiE_group(SEXP ySEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP LSEXP, SEXP deltaSEXP, SEXP maxItSEXP) {
+Rcpp::List SuSiE_group(arma::vec y, arma::mat X1, arma::mat X2, double L, double f, double delta, int maxIt);
+RcppExport SEXP _CPSuSiE_SuSiE_group(SEXP ySEXP, SEXP X1SEXP, SEXP X2SEXP, SEXP LSEXP, SEXP fSEXP, SEXP deltaSEXP, SEXP maxItSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -37,16 +21,16 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::mat >::type X1(X1SEXP);
     Rcpp::traits::input_parameter< arma::mat >::type X2(X2SEXP);
     Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< double >::type f(fSEXP);
     Rcpp::traits::input_parameter< double >::type delta(deltaSEXP);
     Rcpp::traits::input_parameter< int >::type maxIt(maxItSEXP);
-    rcpp_result_gen = Rcpp::wrap(SuSiE_group(y, X1, X2, L, delta, maxIt));
+    rcpp_result_gen = Rcpp::wrap(SuSiE_group(y, X1, X2, L, f, delta, maxIt));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_CPSuSiE_SER", (DL_FUNC) &_CPSuSiE_SER, 6},
-    {"_CPSuSiE_SuSiE_group", (DL_FUNC) &_CPSuSiE_SuSiE_group, 6},
+    {"_CPSuSiE_SuSiE_group", (DL_FUNC) &_CPSuSiE_SuSiE_group, 7},
     {NULL, NULL, 0}
 };
 
